@@ -19,7 +19,7 @@ const About = () => {
               images or PDFs, Yukomp provides a simple and intuitive interface
               to compress your files while maintaining quality. <br />
               The name "Yukomp" comes from the Indonesian phrase "Yuk Kompres!",
-              which means "Let's compress!", reflecting the tool’s friendly and
+              which means "Let's compress!", reflecting the tool's friendly and
               inviting approach to file optimization.
             </p>
           </section>
@@ -116,7 +116,7 @@ const About = () => {
               </div>
               <div className="bg-gray-50 p-6 rounded-xl flex items-center space-x-6">
                 <img
-                  src="https://avatars.githubusercontent.com/genard"
+                  src="https://avatars.githubusercontent.com/genardaryadjaya"
                   alt="Genard Arya Djaya"
                   className="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
                 />
@@ -125,13 +125,13 @@ const About = () => {
                     Genard Arya Djaya
                   </h3>
                   <a
-                    href="https://github.com/genard"
+                    href="https://github.com/genardaryadjaya"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center text-gray-600 hover:text-black transition-colors"
                   >
                     <FiGithub className="mr-2" />
-                    genard
+                    genardaryadjaya
                   </a>
                 </div>
               </div>

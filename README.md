@@ -1,23 +1,23 @@
-# Yukomp - File Compression Tool
+# Yukomp - File Compression Made Simple
 
-Yukomp is a powerful file compression tool designed to help you optimize your files efficiently. Whether you're working with images or PDFs, Yukomp provides a simple and intuitive interface to compress your files while maintaining quality.
+Hey there! 👋 Welcome to Yukomp, your friendly file compression buddy! We're here to help you make your files smaller and more manageable without the hassle. Whether you're working with images or PDFs, Yukomp makes it super easy to optimize your files while keeping them looking great.
 
-The name "Yukomp" comes from the Indonesian phrase "Yuk Kompres!", which means "Let's compress!", reflecting the tool's friendly and inviting approach to file optimization.
+The name "Yukomp" comes from the Indonesian phrase "Yuk Kompres!", which means "Let's compress!" - because who doesn't love a fun way to save space? 😊
 
-## 🌟 Features
+## 🌟 What Can Yukomp Do?
 
 - **Image Compression**
 
-  - Compress multiple images at once
-  - Maintain visual quality
-  - Supports JPG, JPEG, and PNG formats
+  - Squeeze multiple images at once
+  - Keep your images looking sharp and clear
+  - Works with JPG, JPEG, and PNG files
 
 - **PDF Compression**
-  - Reduce PDF file sizes
-  - Maintain document quality
-  - Perfect for sharing and storing documents
+  - Make your PDFs lighter and faster
+  - Keep your documents looking professional
+  - Perfect for sharing and storing
 
-## 🛠️ Tech Stack
+## 🛠️ Built With
 
 ### Frontend
 
@@ -32,24 +32,24 @@ The name "Yukomp" comes from the Indonesian phrase "Yuk Kompres!", which means "
 - Pillow (for image processing)
 - PyPDF2 (for PDF processing)
 
-## 🚀 Getting Started
+## 🚀 Let's Get Started!
 
-### Prerequisites
+### What You'll Need
 
 - Node.js (v14 or higher)
 - Python (v3.8 or higher)
 - npm or yarn
 
-### Running Locally
+### Running on Your Computer
 
-#### 1. Clone the Repository
+#### 1. Get the Code
 
 ```bash
 git clone https://github.com/yourusername/yukomp.git
 cd yukomp
 ```
 
-#### 2. Backend Setup
+#### 2. Set Up the Backend
 
 ```bash
 cd backend
@@ -59,9 +59,9 @@ pip install -r requirements.txt
 python app.py
 ```
 
-The backend server will run on `http://localhost:5000`
+Your backend will be running at `http://localhost:5000`
 
-#### 3. Frontend Setup
+#### 3. Set Up the Frontend
 
 Open a new terminal window and run:
 
@@ -71,55 +71,59 @@ npm install
 npm run dev
 ```
 
-The frontend development server will run on `http://localhost:5173`
+Your frontend will be running at `http://localhost:3000`
 
-#### 4. Access the Application
+#### 4. Start Using Yukomp!
 
-Open your browser and navigate to `http://localhost:5173`
+Open your browser and go to `http://localhost:3000`
 
-Note: Make sure both frontend and backend servers are running simultaneously for the application to work properly.
+Remember: Both frontend and backend need to be running for everything to work smoothly! 😉
 
-## 🚀 Self-Hosting Guide
+## 🚀 Want to Host It Yourself?
 
-If you want to deploy Yukomp on your own servers, follow these instructions:
+### Frontend (Vercel)
 
-### Frontend Deployment (Vercel)
-
-1. Fork or clone this repository
+1. Fork or clone this repo
 2. Create a new project on Vercel
-3. Connect your repository to Vercel
-4. Configure the following build settings:
+3. Connect your repo to Vercel
+4. Set up these build settings:
    - Build Command: `npm run build`
    - Output Directory: `dist`
    - Install Command: `npm install`
-5. Add any necessary environment variables
-6. Deploy!
+5. Add any environment variables you need
+6. Deploy and you're good to go!
 
-### Backend Deployment (Railway)
+### Backend (Railway)
 
-1. Fork or clone this repository
+1. Fork or clone this repo
 2. Create a new project on Railway
-3. Connect your repository to Railway
-4. Configure environment variables if needed
-5. Railway will automatically detect the Python project and use the Procfile
+3. Connect your repo to Railway
+4. Add any environment variables you need
+5. Railway will handle the rest automatically
 6. Deploy!
 
-Note: Make sure to update the frontend API URL to point to your deployed backend URL.
+Don't forget to update the frontend API URL to point to your new backend URL!
 
-## 👥 Contributors
-
-- [Muhammad Fitrian Mubarok](https://github.com/rianmubarok)
-- [Genard Arya Djaya](https://github.com/genard)
-
-## 📝 License
-
-This project is licensed under the Rupacode License. All rights reserved.
+## 📝 License – Rupacode License
 
 Copyright (c) 2025 Rupacode
+All rights reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+You're free to use, explore, learn from, and modify this code for personal and non-commercial purposes — no need to ask!
+Feel free to build cool things on top of it, as long as you give credit and keep this notice in your version.
 
-1. The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-2. Any modifications or derivative works must be clearly marked as such.
-3. The Software may not be used for commercial purposes without explicit permission from Rupacode.
-4. The Software is provided "as is", without warranty of any kind, express or implied.
+Here's what you can do:
+
+- ✅ Use it personally
+- ✅ Modify and share your own version
+- ✅ Learn and build from it
+
+But please don't:
+
+- ❌ Use for commercial purposes without permission
+- ❌ Remove credit or license
+- ❌ Claim it as your own
+
+This project is provided "as-is" — no warranties or guarantees.
+
+Need commercial use? Just reach out: rupacode0@gmail.com

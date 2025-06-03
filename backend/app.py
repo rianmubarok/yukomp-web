@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from routes.compression_routes import compression_bp
 from config.settings import Config
@@ -22,6 +22,34 @@ def create_app():
                 'pdf_compression': '/api/compress/pdf'
             }
         })
+    
+    @app.route('/api/health', methods=['GET', 'OPTIONS'])
+    def health_check():
+        if request.method == 'OPTIONS':
+            return '', 200
+        return jsonify({"status": "healthy"}), 200
+
+    @app.route('/api/db-health', methods=['GET', 'OPTIONS'])
+    def db_health_check():
+        if request.method == 'OPTIONS':
+            return '', 200
+        try:
+            # Add your database connection check here
+            # For now, we'll just return healthy
+            return jsonify({"status": "healthy"}), 200
+        except Exception as e:
+            return jsonify({"status": "unhealthy", "error": str(e)}), 500
+
+    @app.route('/api/file-service-health', methods=['GET', 'OPTIONS'])
+    def file_service_health_check():
+        if request.method == 'OPTIONS':
+            return '', 200
+        try:
+            # Add your file service check here
+            # For now, we'll just return healthy
+            return jsonify({"status": "healthy"}), 200
+        except Exception as e:
+            return jsonify({"status": "unhealthy", "error": str(e)}), 500
     
     # Error handlers
     @app.errorhandler(404)
