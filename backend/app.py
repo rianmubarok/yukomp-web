@@ -1,7 +1,12 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 from flask_cors import CORS
 from routes.compression_routes import compression_bp
+from routes.conversion_routes import conversion_bp
 from config.settings import Config
+from PIL import Image
+import io
+import os
+from datetime import datetime
 
 def create_app():
     app = Flask(__name__)
@@ -10,6 +15,7 @@ def create_app():
     
     # Register blueprints
     app.register_blueprint(compression_bp)
+    app.register_blueprint(conversion_bp, url_prefix='/api/convert')
     
     # Root route
     @app.route('/')
@@ -19,7 +25,8 @@ def create_app():
             'message': 'Yukomp API is running',
             'endpoints': {
                 'image_compression': '/api/compress/image',
-                'pdf_compression': '/api/compress/pdf'
+                'pdf_compression': '/api/compress/pdf',
+                'jpg_to_pdf': '/api/convert/jpg-to-pdf'
             }
         })
     
@@ -50,7 +57,7 @@ def create_app():
             return jsonify({"status": "healthy"}), 200
         except Exception as e:
             return jsonify({"status": "unhealthy", "error": str(e)}), 500
-    
+
     # Error handlers
     @app.errorhandler(404)
     def not_found(error):
@@ -70,4 +77,4 @@ def create_app():
 
 if __name__ == '__main__':
     app = create_app()
-    app.run(debug=True, port=5000) 
+    app.run(debug=True, port=5000)

@@ -28,19 +28,33 @@ const About = () => {
             <h2 className="text-2xl font-bold mb-4">Features</h2>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-gray-50 p-6 rounded-xl">
-                <h3 className="text-lg font-semibold mb-2">
-                  Image Compression
-                </h3>
+                <h3 className="text-lg font-semibold mb-2">Image Processing</h3>
                 <p className="text-gray-600">
-                  Compress multiple images at once while maintaining visual
-                  quality. Supports JPG, JPEG, and PNG formats.
+                  Compress your images while maintaining quality. Perfect for
+                  reducing file size without compromising image clarity.
                 </p>
               </div>
               <div className="bg-gray-50 p-6 rounded-xl">
-                <h3 className="text-lg font-semibold mb-2">PDF Compression</h3>
+                <h3 className="text-lg font-semibold mb-2">PDF Processing</h3>
                 <p className="text-gray-600">
-                  Reduce PDF file sizes without compromising on quality. Perfect
-                  for sharing and storing documents.
+                  Compress PDF files to reduce their size. Ideal for optimizing
+                  document storage and sharing.
+                </p>
+              </div>
+              <div className="bg-gray-50 p-6 rounded-xl">
+                <h3 className="text-lg font-semibold mb-2">
+                  Image to PDF Conversion
+                </h3>
+                <p className="text-gray-600">
+                  Convert one or multiple images into a single PDF document.
+                  Great for creating digital documents from your photos.
+                </p>
+              </div>
+              <div className="bg-gray-50 p-6 rounded-xl">
+                <h3 className="text-lg font-semibold mb-2">Batch Processing</h3>
+                <p className="text-gray-600">
+                  Process multiple files at once. Save time by compressing or
+                  converting multiple files in a single operation.
                 </p>
               </div>
             </div>
@@ -56,8 +70,8 @@ const About = () => {
                 <div>
                   <h3 className="text-lg font-semibold">Upload Your Files</h3>
                   <p className="text-gray-600">
-                    Simply drag and drop your files or click to select them from
-                    your device.
+                    Drag and drop your files or click to select them. You can
+                    upload multiple files at once for batch processing.
                   </p>
                 </div>
               </div>
@@ -67,10 +81,10 @@ const About = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold">
-                    Choose Compression Type
+                    Choose Processing Type
                   </h3>
                   <p className="text-gray-600">
-                    Select the appropriate compression type for your files.
+                    Select the type of processing you need.
                   </p>
                 </div>
               </div>
@@ -80,10 +94,11 @@ const About = () => {
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold">
-                    Download Compressed Files
+                    Get Your Processed Files
                   </h3>
                   <p className="text-gray-600">
-                    Get your optimized files ready for use or sharing.
+                    Download your processed files instantly. All processing is
+                    done securely in your browser.
                   </p>
                 </div>
               </div>
@@ -91,7 +106,7 @@ const About = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold mb-4">Crafted By</h2>
+            <h2 className="text-2xl font-bold mb-4">Created By</h2>
             <div className="space-y-6">
               <div className="bg-gray-50 p-6 rounded-xl flex items-center space-x-6">
                 <img

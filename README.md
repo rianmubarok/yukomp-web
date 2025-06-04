@@ -104,9 +104,9 @@ Remember: Both frontend and backend need to be running for everything to work sm
 
 Don't forget to update the frontend API URL to point to your new backend URL!
 
-## 📝 License – Rupacode License
+## 📝 License – Yukomp License
 
-Copyright (c) 2025 Rupacode
+Copyright (c) 2025 Yukomp
 All rights reserved.
 
 You're free to use, explore, learn from, and modify this code for personal and non-commercial purposes — no need to ask!
