@@ -39,8 +39,29 @@ const Header = () => {
 
   return (
     <header className="relative flex justify-between items-center px-2 sm:px-4 py-2 sm:py-4">
+      <style>
+        {`
+          @keyframes smoothPulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+          }
+          @keyframes smoothPing {
+            0% { transform: scale(1); opacity: 0.75; }
+            50% { transform: scale(1.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 0; }
+          }
+          .status-pulse {
+            animation: smoothPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+          }
+          .status-ping {
+            animation: smoothPing 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+          }
+        `}
+      </style>
+
       {/* Logo */}
-      <div className="text-lg sm:text-xl lg:text-2xl font-bold lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2">
+      <div className="text-2xl font-bold lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2">
         Yukomp
       </div>
 
@@ -82,11 +103,18 @@ const Header = () => {
         </Link>
         <div className="px-4 xl:px-6 py-2 rounded-full text-sm text-black flex items-center">
           Server Status
-          <div
-            className={`w-2 h-2 rounded-full ml-2 ${
-              serverStatus ? "bg-green-500" : "bg-red-500"
-            }`}
-          ></div>
+          <div className="relative ml-2">
+            <div
+              className={`w-2 h-2 rounded-full ${
+                serverStatus ? "bg-green-500" : "bg-red-500"
+              } status-pulse transition-colors duration-500`}
+            />
+            <div
+              className={`absolute inset-0 rounded-full ${
+                serverStatus ? "bg-green-500" : "bg-red-500"
+              } status-ping transition-colors duration-500`}
+            />
+          </div>
         </div>
       </nav>
 
@@ -182,11 +210,18 @@ const Header = () => {
             </Link>
             <div className="px-6 py-2 rounded-full text-sm text-black flex items-center">
               Server Status
-              <div
-                className={`w-2 h-2 rounded-full ml-2 ${
-                  serverStatus ? "bg-green-500" : "bg-red-500"
-                }`}
-              ></div>
+              <div className="relative ml-2">
+                <div
+                  className={`w-2 h-2 rounded-full ${
+                    serverStatus ? "bg-green-500" : "bg-red-500"
+                  } status-pulse transition-colors duration-500`}
+                />
+                <div
+                  className={`absolute inset-0 rounded-full ${
+                    serverStatus ? "bg-green-500" : "bg-red-500"
+                  } status-ping transition-colors duration-500`}
+                />
+              </div>
             </div>
           </nav>
         </div>

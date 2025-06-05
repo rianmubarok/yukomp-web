@@ -97,6 +97,27 @@ const Analytics = () => {
 
   return (
     <div className="max-w-4xl mx-auto mt-6 sm:mt-8 md:mt-10 px-3 sm:px-4 md:px-6">
+      <style>
+        {`
+          @keyframes smoothPulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+          }
+          @keyframes smoothPing {
+            0% { transform: scale(1); opacity: 0.75; }
+            50% { transform: scale(1.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 0; }
+          }
+          .status-pulse {
+            animation: smoothPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+          }
+          .status-ping {
+            animation: smoothPing 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+          }
+        `}
+      </style>
+
       <div className="text-center mb-6 sm:mb-8 md:mb-12">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 sm:mb-3 md:mb-4 tracking-tight">
           Server Analytics
@@ -120,13 +141,20 @@ const Analytics = () => {
                       Local Server
                     </h3>
                     <div className="flex items-center">
-                      <div
-                        className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full mr-2 ${
-                          serverStatus.local ? "bg-green-500" : "bg-red-500"
-                        }`}
-                      ></div>
+                      <div className="relative">
+                        <div
+                          className={`w-2 h-2 rounded-full ${
+                            serverStatus.local ? "bg-green-500" : "bg-red-500"
+                          } status-pulse transition-colors duration-500`}
+                        />
+                        <div
+                          className={`absolute inset-0 rounded-full ${
+                            serverStatus.local ? "bg-green-500" : "bg-red-500"
+                          } status-ping transition-colors duration-500`}
+                        />
+                      </div>
                       <span
-                        className={`text-sm sm:text-base font-medium ${
+                        className={`text-sm sm:text-base font-medium ml-2 ${
                           serverStatus.local ? "text-green-600" : "text-red-600"
                         }`}
                       >
@@ -146,15 +174,24 @@ const Analytics = () => {
                       Production Server
                     </h3>
                     <div className="flex items-center">
-                      <div
-                        className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full mr-2 ${
-                          serverStatus.production
-                            ? "bg-green-500"
-                            : "bg-red-500"
-                        }`}
-                      ></div>
+                      <div className="relative">
+                        <div
+                          className={`w-2 h-2 rounded-full ${
+                            serverStatus.production
+                              ? "bg-green-500"
+                              : "bg-red-500"
+                          } status-pulse transition-colors duration-500`}
+                        />
+                        <div
+                          className={`absolute inset-0 rounded-full ${
+                            serverStatus.production
+                              ? "bg-green-500"
+                              : "bg-red-500"
+                          } status-ping transition-colors duration-500`}
+                        />
+                      </div>
                       <span
-                        className={`text-sm sm:text-base font-medium ${
+                        className={`text-sm sm:text-base font-medium ml-2 ${
                           serverStatus.production
                             ? "text-green-600"
                             : "text-red-600"
@@ -183,13 +220,20 @@ const Analytics = () => {
                     Backend API Status
                   </span>
                   <div className="flex items-center">
-                    <div
-                      className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full mr-2 ${
-                        serverStatus.backend ? "bg-green-500" : "bg-red-500"
-                      }`}
-                    ></div>
+                    <div className="relative">
+                      <div
+                        className={`w-2 h-2 rounded-full ${
+                          serverStatus.backend ? "bg-green-500" : "bg-red-500"
+                        } status-pulse transition-colors duration-500`}
+                      />
+                      <div
+                        className={`absolute inset-0 rounded-full ${
+                          serverStatus.backend ? "bg-green-500" : "bg-red-500"
+                        } status-ping transition-colors duration-500`}
+                      />
+                    </div>
                     <span
-                      className={`text-sm sm:text-base font-medium ${
+                      className={`text-sm sm:text-base font-medium ml-2 ${
                         serverStatus.backend ? "text-green-600" : "text-red-600"
                       }`}
                     >
@@ -202,15 +246,24 @@ const Analytics = () => {
                     File Processing Service
                   </span>
                   <div className="flex items-center">
-                    <div
-                      className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full mr-2 ${
-                        serverStatus.fileProcessing
-                          ? "bg-green-500"
-                          : "bg-red-500"
-                      }`}
-                    ></div>
+                    <div className="relative">
+                      <div
+                        className={`w-2 h-2 rounded-full ${
+                          serverStatus.fileProcessing
+                            ? "bg-green-500"
+                            : "bg-red-500"
+                        } status-pulse transition-colors duration-500`}
+                      />
+                      <div
+                        className={`absolute inset-0 rounded-full ${
+                          serverStatus.fileProcessing
+                            ? "bg-green-500"
+                            : "bg-red-500"
+                        } status-ping transition-colors duration-500`}
+                      />
+                    </div>
                     <span
-                      className={`text-sm sm:text-base font-medium ${
+                      className={`text-sm sm:text-base font-medium ml-2 ${
                         serverStatus.fileProcessing
                           ? "text-green-600"
                           : "text-red-600"
