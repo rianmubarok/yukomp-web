@@ -17,5 +17,5 @@ class Config:
     ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg'}
     ALLOWED_PDF_EXTENSIONS = {'pdf'}
     
-    # Maximum file size (in bytes) - 10MB
-    MAX_CONTENT_LENGTH = 10 * 1024 * 1024 
+    # Maximum file size (in bytes) - 25MB
+    MAX_CONTENT_LENGTH = 25 * 1024 * 1024 

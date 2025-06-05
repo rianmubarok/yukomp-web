@@ -18,10 +18,10 @@ function AppContent() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <div className="flex-1 py-5 px-4 sm:px-6 lg:px-8 font-sans">
+      <div className="flex-1 py-1 sm:py-2 px-2 sm:px-4 md:px-6 lg:px-8 font-sans">
         <ToastContainer position="top-right" />
         <Header />
-        <main className="min-h-[calc(100vh-200px)]">
+        <main className="min-h-[calc(100vh-180px)] sm:min-h-[calc(100vh-200px)]">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />

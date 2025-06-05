@@ -1,31 +1,31 @@
 export const animationStyles = `
-  @keyframes slideUpAndFadeOut {
-    0% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(-100%);
+  @keyframes slideUpFadeIn {
+    from {
       opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 
-  @keyframes slideUpAndFadeIn {
-    0% {
-      transform: translateY(100%);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
+  @keyframes slideUpFadeOut {
+    from {
       opacity: 1;
+      transform: translateY(0);
     }
-  }
-
-  .animate-slide-up-fade-out {
-    animation: slideUpAndFadeOut 0.3s ease-out forwards;
+    to {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
   }
 
   .animate-slide-up-fade-in {
-    animation: slideUpAndFadeIn 0.3s ease-out forwards;
+    animation: slideUpFadeIn 0.3s ease-out forwards;
+  }
+
+  .animate-slide-up-fade-out {
+    animation: slideUpFadeOut 0.3s ease-out forwards;
   }
 `;

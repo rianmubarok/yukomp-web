@@ -119,7 +119,11 @@ const Home = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-10">
+    <div
+      className={`max-w-3xl mx-auto ${
+        isCompressing || isConverting ? "mt-10" : "mt-20 sm:mt-4 md:mt-6"
+      } px-3 sm:px-4 md:px-6 py-4 sm:py-4 mb-8 sm:mb-12 md:mb-16`}
+    >
       <style>{animationStyles}</style>
       <div
         className={`transition-all duration-500 ${
@@ -129,16 +133,16 @@ const Home = () => {
         <div className="text-center">
           {!isCompressing && !isConverting ? (
             <>
-              <h1 className="text-6xl font-bold mb-2 tracking-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
                 Your All-in-one File
               </h1>
-              <h1 className="text-6xl font-bold mb-4 tracking-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-3 sm:mb-3 tracking-tight">
                 Processing Tool
               </h1>
-              <div className="h-12 relative overflow-visible">
+              <div className="h-10 sm:h-12 relative overflow-visible">
                 <div
                   key={currentTextIndex}
-                  className={`text-lg absolute w-full ${
+                  className={`text-sm sm:text-base md:text-lg absolute w-full ${
                     isAnimating
                       ? "animate-slide-up-fade-out"
                       : "animate-slide-up-fade-in"
@@ -150,13 +154,13 @@ const Home = () => {
             </>
           ) : (
             <>
-              <h1 className="text-6xl font-bold mb-2 tracking-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
                 Please Wait
               </h1>
-              <h1 className="text-6xl font-bold mb-4 tracking-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 tracking-tight whitespace-nowrap">
                 We're working on your files
               </h1>
-              <div className="w-64 h-64 mx-auto mb-8">
+              <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto mb-4 sm:mb-6 md:mb-8">
                 <DotLottieReact
                   src="https://lottie.host/7ffaf54c-fc48-4cd9-9459-b18d765a5e18/X232jk2jah.lottie"
                   loop
@@ -164,7 +168,7 @@ const Home = () => {
                   style={{ width: "100%", height: "100%" }}
                 />
               </div>
-              <p className="text-lg mb-8">
+              <p className="text-sm sm:text-base md:text-lg mb-4 sm:mb-6 md:mb-8 px-2 sm:px-4">
                 {isPngFile
                   ? "PNG compression can sometimes take a while, please wait a moment..."
                   : "This may take a moment..."}

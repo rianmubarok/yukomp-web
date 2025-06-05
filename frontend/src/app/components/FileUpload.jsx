@@ -41,21 +41,25 @@ function SortableItem({ file, index, onRemove }) {
     <div
       ref={setNodeRef}
       style={style}
-      className="py-4 px-6 bg-lightGrayBlue rounded-full flex items-center justify-between"
+      className="py-3 sm:py-4 px-4 sm:px-6 bg-lightGrayBlue rounded-full flex items-center justify-between"
     >
       <div
         {...attributes}
         {...listeners}
-        className="flex items-center space-x-3 cursor-move flex-grow"
+        className="flex items-center space-x-3 cursor-move flex-grow min-w-0"
       >
         {file.type.startsWith("image/") ? (
-          <FiImage className="h-6 w-6 text-gray-600" />
+          <FiImage className="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 flex-shrink-0" />
         ) : (
-          <FiFileText className="h-6 w-6 text-gray-600" />
+          <FiFileText className="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 flex-shrink-0" />
         )}
-        <div>
-          <span className="text-gray-800 text-sm font-medium">{file.name}</span>
-          <p className="text-gray-600 text-xs">{formatFileSize(file.size)}</p>
+        <div className="min-w-0 flex-1">
+          <span className="text-gray-800 text-sm font-medium block truncate">
+            {file.name}
+          </span>
+          <p className="text-gray-600 text-xs truncate">
+            {formatFileSize(file.size)}
+          </p>
         </div>
       </div>
 
@@ -64,7 +68,7 @@ function SortableItem({ file, index, onRemove }) {
           e.stopPropagation();
           onRemove(index);
         }}
-        className="text-gray-500 hover:text-gray-700 ml-2"
+        className="text-gray-500 hover:text-gray-700 ml-2 flex-shrink-0"
       >
         <FiX className="h-5 w-5" />
       </button>
@@ -117,7 +121,7 @@ const FileUpload = ({
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleDrop,
     accept: {
-      "image/*": [".jpg", ".jpeg", ".png", ".gif", ".bmp"],
+      "image/*": [".jpg", ".jpeg", ".png"],
       "application/pdf": [".pdf"],
     },
     multiple: true,
@@ -185,10 +189,10 @@ const FileUpload = ({
 
   return (
     <div className="max-w-3xl mx-auto">
-      <div className="bg-white rounded-4xl border border-lightGrayBlue p-6">
+      <div className="bg-white rounded-2xl sm:rounded-3xl md:rounded-4xl border border-lightGrayBlue p-3 sm:p-4 md:p-6">
         <div
           {...getRootProps()}
-          className={`border border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all duration-300 group upload-area
+          className={`border border-dashed rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-6 md:p-12 text-center cursor-pointer transition-all duration-300 group upload-area
             ${
               isDragActive
                 ? "border-blue-500 gradient-animate scale-[1.02] shadow-lg"
@@ -196,14 +200,14 @@ const FileUpload = ({
             }`}
         >
           <input {...getInputProps()} />
-          <div className="relative mx-auto h-20 w-20">
+          <div className="relative mx-auto h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20">
             <FiUpload
-              className={`absolute top-0 left-0 h-20 w-20 thin-icon transition-opacity duration-300 ${
+              className={`absolute top-0 left-0 h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 thin-icon transition-opacity duration-300 ${
                 isDragActive ? "opacity-0" : "group-hover:opacity-0"
               }`}
             />
             <FiUpload
-              className={`absolute top-0 left-0 h-20 w-20 regular-icon text-blue-500 transition-opacity duration-300 ${
+              className={`absolute top-0 left-0 h-14 w-14 sm:h-16 sm:w-16 md:h-20 md:w-20 regular-icon text-blue-500 transition-opacity duration-300 ${
                 isDragActive
                   ? "opacity-100"
                   : "opacity-0 group-hover:opacity-100"
@@ -211,7 +215,7 @@ const FileUpload = ({
             />
           </div>
           <p
-            className={`mt-4 text-lg transition-colors duration-300 ${
+            className={`mt-3 sm:mt-4 text-sm sm:text-base md:text-lg transition-colors duration-300 ${
               isDragActive
                 ? "text-blue-600"
                 : "text-gray-600 group-hover:text-blue-600"
@@ -222,19 +226,19 @@ const FileUpload = ({
               : "Drag and drop your files here, or click to select"}
           </p>
           <p
-            className={`mt-2 text-sm transition-colors duration-300 ${
+            className={`mt-1 sm:mt-2 text-xs sm:text-sm transition-colors duration-300 ${
               isDragActive
                 ? "text-blue-500"
                 : "text-gray-500 group-hover:text-blue-500"
             }`}
           >
-            Supports JPG, JPEG, PNG, GIF, BMP, and PDF files
+            Supports JPG, JPEG, PNG, and PDF files
           </p>
         </div>
       </div>
 
       {selectedFiles.length > 0 && (
-        <div className="mt-6 space-y-4">
+        <div className="mt-3 sm:mt-4 space-y-2 sm:space-y-3 md:space-y-4">
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
@@ -244,7 +248,7 @@ const FileUpload = ({
               items={selectedFiles.map((file, index) => file.name + index)}
               strategy={verticalListSortingStrategy}
             >
-              <div className="space-y-2">
+              <div className="space-y-2 sm:space-y-3">
                 {selectedFiles.map((file, index) => (
                   <SortableItem
                     key={file.name + index}
@@ -257,51 +261,37 @@ const FileUpload = ({
             </SortableContext>
           </DndContext>
 
-          {/* Available Features Section */}
-          {!isCompressing &&
-            uploadProgress === 0 &&
-            availableFeatures.length > 0 && (
-              <div className="mt-6">
-                <h3 className="text-sm font-medium text-gray-700 mb-3">
-                  Available Features
-                </h3>
-                <div className="space-y-3">
-                  {availableFeatures.map((feature) => (
-                    <button
-                      key={feature.id}
-                      onClick={() => setCompressionType(feature.id)}
-                      className={`w-full p-3 rounded-lg border text-left transition-colors ${
-                        compressionType === feature.id
-                          ? "border-blue-500 bg-blue-50"
-                          : "border-gray-200 hover:border-blue-300"
-                      }`}
-                    >
-                      <div className="flex items-center">
-                        <div
-                          className={`p-2 rounded-md ${
-                            compressionType === feature.id
-                              ? "bg-blue-100 text-blue-600"
-                              : "bg-gray-100 text-gray-600"
-                          }`}
-                        >
-                          {feature.icon}
-                        </div>
-                        <div className="ml-3">
-                          <p className="text-sm font-medium text-gray-900">
-                            {feature.name}
-                          </p>
-                          <p className="text-xs text-gray-500">
-                            {feature.description}
-                          </p>
-                        </div>
-                      </div>
-                    </button>
-                  ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-4 mt-3 sm:mt-4">
+            {availableFeatures.map((feature) => (
+              <button
+                key={feature.id}
+                onClick={() => setCompressionType(feature.id)}
+                className={`flex items-center space-x-2 sm:space-x-3 p-3 sm:p-4 rounded-lg sm:rounded-xl border transition-all duration-300 ${
+                  compressionType === feature.id
+                    ? "border-blue-500 bg-blue-50"
+                    : "border-gray-200 hover:border-blue-300 hover:bg-blue-50"
+                }`}
+              >
+                <div
+                  className={`p-1.5 sm:p-2 rounded-lg ${
+                    compressionType === feature.id
+                      ? "bg-blue-500 text-white"
+                      : "bg-gray-100 text-gray-600"
+                  }`}
+                >
+                  {feature.icon}
                 </div>
-              </div>
-            )}
+                <div className="text-left">
+                  <h3 className="text-xs sm:text-sm font-medium text-gray-900">
+                    {feature.name}
+                  </h3>
+                  <p className="text-xs text-gray-500">{feature.description}</p>
+                </div>
+              </button>
+            ))}
+          </div>
 
-          <div className="flex justify-center mt-6">
+          <div className="flex justify-center mt-3 sm:mt-4">
             <button
               onClick={() => onStartProcess(selectedFiles)}
               disabled={isCompressing}
@@ -310,15 +300,19 @@ const FileUpload = ({
               }`}
             >
               {/* Text Part */}
-              <span className="py-3 px-6 bg-lightGreen rounded-full">
+              <span className="py-2 sm:py-2.5 md:py-3 px-4 sm:px-6 bg-lightGreen rounded-full text-sm sm:text-base">
                 {compressionType === "jpg-to-pdf"
                   ? "Convert to PDF"
                   : "Compress Files"}
               </span>
 
               {/* Icon Part with Round Background */}
-              <div className="flex items-center justify-center w-12 h-12 bg-lightGreen rounded-full -ml-4 group-hover:-ml-1 transition-all">
-                <FiArrowRight className="h-6 w-6 thin-icon group-hover:regular-icon rotate-[-45deg] transition-transform group-hover:rotate-0" />
+              <div className="flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-lightGreen rounded-full -ml-3 sm:-ml-4 group-hover:-ml-1 transition-all">
+                {isCompressing ? (
+                  <FiLoader className="h-5 w-5 sm:h-6 sm:w-6 thin-icon animate-spin" />
+                ) : (
+                  <FiArrowRight className="h-5 w-5 sm:h-6 sm:w-6 thin-icon group-hover:regular-icon rotate-[-45deg] transition-transform group-hover:rotate-0" />
+                )}
               </div>
             </button>
           </div>

@@ -86,7 +86,7 @@ const Analytics = () => {
     };
 
     checkServerStatus();
-    // Check status every 5 seconds instead of 30
+    // Check status every 5 seconds
     const interval = setInterval(checkServerStatus, 5000);
     return () => clearInterval(interval);
   }, []);
@@ -96,31 +96,37 @@ const Analytics = () => {
     window.location.hostname !== "127.0.0.1";
 
   return (
-    <div className="max-w-4xl mx-auto mt-10">
-      <div className="text-center mb-12">
-        <h1 className="text-6xl font-bold mb-4 tracking-tight">
+    <div className="max-w-4xl mx-auto mt-6 sm:mt-8 md:mt-10 px-3 sm:px-4 md:px-6">
+      <div className="text-center mb-6 sm:mb-8 md:mb-12">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-2 sm:mb-3 md:mb-4 tracking-tight">
           Server Analytics
         </h1>
-        <p className="text-xl">Real-time server status monitoring</p>
+        <p className="text-base sm:text-lg md:text-xl text-gray-600">
+          Real-time server status monitoring
+        </p>
       </div>
 
-      <div className="bg-white rounded-4xl border border-lightGrayBlue p-8">
-        <div className="space-y-8">
+      <div className="bg-white rounded-2xl sm:rounded-3xl md:rounded-4xl border border-lightGrayBlue p-4 sm:p-6 md:p-8">
+        <div className="space-y-6 sm:space-y-8">
           <section>
-            <h2 className="text-2xl font-bold mb-4">Server Status</h2>
-            <div className="grid md:grid-cols-2 gap-6">
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
+              Server Status
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 md:gap-6">
               {!isProduction && (
-                <div className="bg-gray-50 p-6 rounded-xl">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold">Local Server</h3>
+                <div className="bg-gray-50 p-4 sm:p-5 md:p-6 rounded-lg sm:rounded-xl">
+                  <div className="flex items-center justify-between mb-3 sm:mb-4">
+                    <h3 className="text-base sm:text-lg font-semibold">
+                      Local Server
+                    </h3>
                     <div className="flex items-center">
                       <div
-                        className={`w-3 h-3 rounded-full mr-2 ${
+                        className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full mr-2 ${
                           serverStatus.local ? "bg-green-500" : "bg-red-500"
                         }`}
                       ></div>
                       <span
-                        className={`font-medium ${
+                        className={`text-sm sm:text-base font-medium ${
                           serverStatus.local ? "text-green-600" : "text-red-600"
                         }`}
                       >
@@ -128,25 +134,27 @@ const Analytics = () => {
                       </span>
                     </div>
                   </div>
-                  <p className="text-gray-600">
+                  <p className="text-sm sm:text-base text-gray-600">
                     Running on: http://localhost:5000
                   </p>
                 </div>
               )}
               {isProduction && (
-                <div className="bg-gray-50 p-6 rounded-xl">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-lg font-semibold">Production Server</h3>
+                <div className="bg-gray-50 p-4 sm:p-5 md:p-6 rounded-lg sm:rounded-xl">
+                  <div className="flex items-center justify-between mb-3 sm:mb-4">
+                    <h3 className="text-base sm:text-lg font-semibold">
+                      Production Server
+                    </h3>
                     <div className="flex items-center">
                       <div
-                        className={`w-3 h-3 rounded-full mr-2 ${
+                        className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full mr-2 ${
                           serverStatus.production
                             ? "bg-green-500"
                             : "bg-red-500"
                         }`}
                       ></div>
                       <span
-                        className={`font-medium ${
+                        className={`text-sm sm:text-base font-medium ${
                           serverStatus.production
                             ? "text-green-600"
                             : "text-red-600"
@@ -156,7 +164,7 @@ const Analytics = () => {
                       </span>
                     </div>
                   </div>
-                  <p className="text-gray-600">
+                  <p className="text-sm sm:text-base text-gray-600">
                     Running on: {window.location.origin}
                   </p>
                 </div>
@@ -165,19 +173,23 @@ const Analytics = () => {
           </section>
 
           <section>
-            <h2 className="text-2xl font-bold mb-4">System Information</h2>
-            <div className="bg-gray-50 p-6 rounded-xl">
-              <div className="space-y-4">
+            <h2 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">
+              System Information
+            </h2>
+            <div className="bg-gray-50 p-4 sm:p-5 md:p-6 rounded-lg sm:rounded-xl">
+              <div className="space-y-3 sm:space-y-4">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">Backend API Status</span>
+                  <span className="text-sm sm:text-base text-gray-600">
+                    Backend API Status
+                  </span>
                   <div className="flex items-center">
                     <div
-                      className={`w-3 h-3 rounded-full mr-2 ${
+                      className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full mr-2 ${
                         serverStatus.backend ? "bg-green-500" : "bg-red-500"
                       }`}
                     ></div>
                     <span
-                      className={`font-medium ${
+                      className={`text-sm sm:text-base font-medium ${
                         serverStatus.backend ? "text-green-600" : "text-red-600"
                       }`}
                     >
@@ -186,17 +198,19 @@ const Analytics = () => {
                   </div>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-600">File Processing Service</span>
+                  <span className="text-sm sm:text-base text-gray-600">
+                    File Processing Service
+                  </span>
                   <div className="flex items-center">
                     <div
-                      className={`w-3 h-3 rounded-full mr-2 ${
+                      className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full mr-2 ${
                         serverStatus.fileProcessing
                           ? "bg-green-500"
                           : "bg-red-500"
                       }`}
                     ></div>
                     <span
-                      className={`font-medium ${
+                      className={`text-sm sm:text-base font-medium ${
                         serverStatus.fileProcessing
                           ? "text-green-600"
                           : "text-red-600"
@@ -212,10 +226,10 @@ const Analytics = () => {
         </div>
       </div>
 
-      <div className="mt-8 text-center">
+      <div className="mt-6 sm:mt-8 text-center">
         <Link
           to="/"
-          className="inline-flex items-center px-6 py-3 bg-black text-white rounded-full font-medium hover:bg-gray-800 transition-colors"
+          className="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 bg-black text-white rounded-full text-sm sm:text-base font-medium hover:bg-gray-800 transition-colors"
         >
           <FiArrowLeft className="mr-2" />
           Back to Home
