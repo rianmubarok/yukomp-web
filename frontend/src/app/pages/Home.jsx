@@ -170,7 +170,7 @@ const Home = () => {
               </div>
               <p className="text-sm sm:text-base md:text-lg mb-4 sm:mb-6 md:mb-8 px-2 sm:px-4">
                 {isPngFile
-                  ? "PNG compression can sometimes take a while, please wait a moment..."
+                  ? "PNG processing can sometimes take a while, please wait a moment..."
                   : "This may take a moment..."}
               </p>
             </>

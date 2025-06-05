@@ -27,6 +27,12 @@ import {
 } from "react-icons/fi";
 import { getFileType, formatFileSize } from "../utils/fileUtils";
 import { toast } from "react-toastify";
+import bg1 from "../../assets/bg1.png";
+import bg2 from "../../assets/bg2.png";
+import bg3 from "../../assets/bg3.png";
+import imgPng from "../../assets/jpg.png";
+import PdfPng1 from "../../assets/pdf1.png";
+import PdfPng2 from "../../assets/pdf2.png";
 
 function SortableItem({ file, index, onRemove }) {
   const { attributes, listeners, setNodeRef, transform, transition } =
@@ -49,9 +55,9 @@ function SortableItem({ file, index, onRemove }) {
         className="flex items-center space-x-3 cursor-move flex-grow min-w-0"
       >
         {file.type.startsWith("image/") ? (
-          <FiImage className="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 flex-shrink-0" />
+          <FiImage className="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 flex-shrink-0 regular-icon" />
         ) : (
-          <FiFileText className="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 flex-shrink-0" />
+          <FiFileText className="h-5 w-5 sm:h-6 sm:w-6 text-gray-600 flex-shrink-0 regular-icon" />
         )}
         <div className="min-w-0 flex-1">
           <span className="text-gray-800 text-sm font-medium block truncate">
@@ -70,7 +76,7 @@ function SortableItem({ file, index, onRemove }) {
         }}
         className="text-gray-500 hover:text-gray-700 ml-2 flex-shrink-0"
       >
-        <FiX className="h-5 w-5" />
+        <FiX className="h-5 w-5 regular-icon" />
       </button>
     </div>
   );
@@ -152,40 +158,46 @@ const FileUpload = ({
   };
 
   const getAvailableFeatures = (files) => {
-    // For simplicity, assume all files are of the same type for feature detection
-    if (!files || files.length === 0) return [];
+    const allFeatures = [
+      {
+        id: "image",
+        title: "Image Compression",
+        description: "Compress image(s) while maintaining quality",
+        bgImage: bg1,
+        icon: imgPng,
+        supportedTypes: ["image"],
+      },
+      {
+        id: "jpg-to-pdf",
+        title: "JPG to PDF",
+        description: "Convert image(s) to PDF document",
+        bgImage: bg2,
+        icon: PdfPng1,
+        supportedTypes: ["image"],
+      },
+      {
+        id: "pdf",
+        title: "PDF Compression",
+        description: "Compress PDF file(s) to reduce size",
+        bgImage: bg3,
+        icon: PdfPng2,
+        supportedTypes: ["pdf"],
+      },
+    ];
 
-    const features = [];
+    if (!files || files.length === 0) return allFeatures;
+
     const fileType = getFileType(files[0].name);
 
-    if (fileType === "image") {
-      features.push({
-        id: "image",
-        name: "Image Compression",
-        description: "Compress image(s) while maintaining quality",
-        icon: <FiImage className="h-5 w-5" />,
-      });
-      features.push({
-        id: "jpg-to-pdf",
-        name: "Convert to PDF",
-        description: "Convert image(s) to PDF document",
-        icon: <FiFileText className="h-5 w-5" />,
-      });
-    } else if (fileType === "pdf") {
-      features.push({
-        id: "pdf",
-        name: "PDF Compression",
-        description: "Compress PDF file(s) to reduce size",
-        icon: <FiFileText className="h-5 w-5" />,
-      });
-    }
-
-    return features;
+    return allFeatures.map((feature) => ({
+      ...feature,
+      disabled: !feature.supportedTypes.includes(fileType),
+    }));
   };
 
   const availableFeatures = selectedFiles
     ? getAvailableFeatures(selectedFiles)
-    : [];
+    : getAvailableFeatures();
 
   return (
     <div className="max-w-3xl mx-auto">
@@ -195,8 +207,8 @@ const FileUpload = ({
           className={`border border-dashed rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-6 md:p-12 text-center cursor-pointer transition-all duration-300 group upload-area
             ${
               isDragActive
-                ? "border-blue-500 gradient-animate scale-[1.02] shadow-lg"
-                : "border-black hover:border-blue-500 hover:gradient-animate hover:scale-[1.02] hover:shadow-lg bg-lightGrayBlue"
+                ? "border-blue-500 gradient-animate scale-[1.02]"
+                : "border-black hover:border-blue-500 hover:gradient-animate hover:scale-[1.02] hover bg-lightGrayBlue"
             }`}
         >
           <input {...getInputProps()} />
@@ -261,33 +273,50 @@ const FileUpload = ({
             </SortableContext>
           </DndContext>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 md:gap-4 mt-3 sm:mt-4">
+          <div className="flex flex-col md:flex-row justify-center gap-4">
             {availableFeatures.map((feature) => (
-              <button
+              <div
                 key={feature.id}
-                onClick={() => setCompressionType(feature.id)}
-                className={`flex items-center space-x-2 sm:space-x-3 p-3 sm:p-4 rounded-lg sm:rounded-xl border transition-all duration-300 ${
-                  compressionType === feature.id
-                    ? "border-blue-500 bg-blue-50"
-                    : "border-gray-200 hover:border-blue-300 hover:bg-blue-50"
+                onClick={() =>
+                  !feature.disabled && setCompressionType(feature.id)
+                }
+                className={`bg-white rounded-2xl border p-3 md:p-4 flex flex-row md:flex-col items-center text-center w-full md:w-[250px] h-[72px] md:h-auto group transition-all duration-300 ${
+                  feature.disabled
+                    ? "border-gray-200 bg-gray-50 cursor-not-allowed opacity-60"
+                    : compressionType === feature.id
+                    ? "border-blue-500 scale-[1.02] cursor-pointer"
+                    : "border-lightGrayBlue hover:border-blue-300 cursor-pointer"
                 }`}
               >
-                <div
-                  className={`p-1.5 sm:p-2 rounded-lg ${
-                    compressionType === feature.id
-                      ? "bg-blue-500 text-white"
-                      : "bg-gray-100 text-gray-600"
-                  }`}
-                >
-                  {feature.icon}
+                <div className="relative w-14 h-50 md:w-full md:h-50 rounded-lg md:rounded-xl md:mb-4 overflow-hidden flex-shrink-0">
+                  <img
+                    src={feature.bgImage}
+                    alt={`${feature.title} icon background`}
+                    className="w-full h-full object-cover"
+                  />
+                  <img
+                    src={feature.icon}
+                    alt="Feature icon"
+                    className="absolute m-auto w-12 md:w-44 top-2 md:top-8 left-1 md:left-16 group-hover:top-1 md:group-hover:top-6 md:group-hover:left-14 transition-all duration-200"
+                  />
                 </div>
-                <div className="text-left">
-                  <h3 className="text-xs sm:text-sm font-medium text-gray-900">
-                    {feature.name}
+                <div className="ml-4 md:ml-0 text-left md:text-center">
+                  <h3
+                    className={`text-sm sm:text-base font-medium ${
+                      feature.disabled
+                        ? "text-gray-400"
+                        : compressionType === feature.id
+                        ? "text-blue-600"
+                        : "text-gray-900"
+                    }`}
+                  >
+                    {feature.title}
                   </h3>
-                  <p className="text-xs text-gray-500">{feature.description}</p>
+                  <p className="text-xs sm:text-sm text-gray-500">
+                    {feature.description}
+                  </p>
                 </div>
-              </button>
+              </div>
             ))}
           </div>
 
@@ -299,19 +328,17 @@ const FileUpload = ({
                 isCompressing ? "cursor-not-allowed" : "hover:brightness-95"
               }`}
             >
-              {/* Text Part */}
-              <span className="py-2 sm:py-2.5 md:py-3 px-4 sm:px-6 bg-lightGreen rounded-full text-sm sm:text-base">
+              <span className="mb-5 mt-3 py-2.5 sm:py-2.5 md:py-3 px-4 sm:px-6 bg-lightGreen rounded-full text-sm sm:text-base">
                 {compressionType === "jpg-to-pdf"
                   ? "Convert to PDF"
                   : "Compress Files"}
               </span>
 
-              {/* Icon Part with Round Background */}
-              <div className="flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-lightGreen rounded-full -ml-3 sm:-ml-4 group-hover:-ml-1 transition-all">
+              <div className="mb-5 mt-3 flex items-center justify-center w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 bg-lightGreen rounded-full -ml-3 sm:-ml-4 group-hover:-ml-1 transition-all">
                 {isCompressing ? (
                   <FiLoader className="h-5 w-5 sm:h-6 sm:w-6 thin-icon animate-spin" />
                 ) : (
-                  <FiArrowRight className="h-5 w-5 sm:h-6 sm:w-6 thin-icon group-hover:regular-icon rotate-[-45deg] transition-transform group-hover:rotate-0" />
+                  <FiArrowRight className="h-5 w-5 sm:h-6 sm:w-6 regular-icon group-hover:regular-icon rotate-[-45deg] transition-transform group-hover:rotate-0" />
                 )}
               </div>
             </button>
