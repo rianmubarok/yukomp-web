@@ -204,7 +204,7 @@ const FileUpload = ({
       <div className="bg-white rounded-2xl sm:rounded-3xl md:rounded-4xl border border-lightGrayBlue p-3 sm:p-4 md:p-6">
         <div
           {...getRootProps()}
-          className={`border border-dashed rounded-lg sm:rounded-xl md:rounded-2xl p-4 sm:p-6 md:p-12 text-center cursor-pointer transition-all duration-300 group upload-area
+          className={`border border-dashed rounded-lg sm:rounded-xl md:rounded-2xl p-6 sm:p-6 md:p-12 text-center cursor-pointer transition-all duration-300 group upload-area
             ${
               isDragActive
                 ? "border-blue-500 gradient-animate scale-[1.02]"
@@ -250,7 +250,7 @@ const FileUpload = ({
       </div>
 
       {selectedFiles.length > 0 && (
-        <div className="mt-3 sm:mt-4 space-y-2 sm:space-y-3 md:space-y-4">
+        <div className="mt-3 sm:mt-4 space-y-2 sm:space-y-3 md:space-y-4 animate-fadeIn">
           <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
@@ -274,7 +274,7 @@ const FileUpload = ({
           </DndContext>
 
           <div className="flex flex-col md:flex-row justify-center gap-4">
-            {availableFeatures.map((feature) => (
+            {availableFeatures.map((feature, index) => (
               <div
                 key={feature.id}
                 onClick={() =>
@@ -287,6 +287,7 @@ const FileUpload = ({
                     ? "border-blue-500 scale-[1.02] cursor-pointer"
                     : "border-lightGrayBlue hover:border-blue-300 cursor-pointer"
                 }`}
+                style={{}}
               >
                 <div className="relative w-14 h-50 md:w-full md:h-50 rounded-lg md:rounded-xl md:mb-4 overflow-hidden flex-shrink-0">
                   <img

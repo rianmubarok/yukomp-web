@@ -3,7 +3,7 @@ import { FiArrowLeft } from "react-icons/fi";
 const ThankYou = ({ onReset }) => {
   return (
     <div className="text-center">
-      <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-3 sm:mb-4 tracking-tight">
+      <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mt-10 mb-3 sm:mb-4 tracking-tight">
         Thank You!
       </h1>
       <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8">
