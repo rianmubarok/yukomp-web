@@ -45,7 +45,7 @@ The name "Yukomp" comes from the Indonesian phrase "Yuk Kompres!", which means "
 #### 1. Get the Code
 
 ```bash
-git clone https://github.com/yourusername/yukomp.git
+git clone https://github.com/rianmubarok/yukomp.git
 cd yukomp
 ```
 
