@@ -45,7 +45,7 @@ The name "Yukomp" comes from the Indonesian phrase "Yuk Kompres!", which means "
 #### 1. Get the Code
 
 ```bash
-git clone https://github.com/rianmubarok/yukomp.git
+git clone https://github.com/rianmubarok/yukomp-web.git
 cd yukomp
 ```
 
@@ -54,7 +54,7 @@ cd yukomp
 ```bash
 cd backend
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+venv\Scripts\activate
 pip install -r requirements.txt
 python app.py
 ```
