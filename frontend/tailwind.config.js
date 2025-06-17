@@ -4,7 +4,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Helvetica", "Arial", "sans-serif"],
+        sans: ["Satoshi", "Helvetica", "Arial", "sans-serif"],
       },
       borderRadius: {
         "4xl": "2.5rem",
@@ -12,6 +12,8 @@ export default {
       colors: {
         lightGrayBlue: "#E8E8F4",
         lightGreen: "#D0F0A0",
+        customGray: "#616161",
+        customBlack: "#1F1F1F",
       },
       keyframes: {
         "slide-up-fade-out": {

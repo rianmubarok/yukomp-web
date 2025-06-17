@@ -1,26 +1,16 @@
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { FiArrowRight } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import FileUpload from "../components/FileUpload";
-import FileProgress from "../components/FileProgress";
-import ThankYou from "../components/ThankYou";
-import { compressFile, convertJpgToPdf } from "../services/api";
-import { downloadFile } from "../utils/fileUtils";
 import { animationStyles } from "../utils/animations";
 
 const Home = () => {
-  const [isCompressing, setIsCompressing] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
-  const [compressionType, setCompressionType] = useState("image");
-  const [selectedFiles, setSelectedFiles] = useState([]);
-  const [showThankYou, setShowThankYou] = useState(false);
-  const [isPngFile, setIsPngFile] = useState(false);
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const [isConverting, setIsConverting] = useState(false);
+  const [showFileUpload, setShowFileUpload] = useState(false);
 
   const rotatingTexts = [
-    "Drop Your File(s). We'll Handle The Rest",
+    "Drop Your Files. We'll Handle The Rest",
     "Unggah file-mu. Biar kami yang urus sisanya",
     "Déposez vos fichiers. On s'occupe du reste",
     "Suelta Tu(s) Archivo(s). Nosotros Nos Encargamos Del Resto",
@@ -42,165 +32,91 @@ const Home = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleStartProcess = async (files) => {
-    if (compressionType === "jpg-to-pdf") {
-      setIsConverting(true);
-      try {
-        const pdfBlob = await convertJpgToPdf(files);
-        downloadFile(pdfBlob, `converted_${new Date().getTime()}.pdf`);
-        toast.success("Images successfully converted to PDF!");
-        setShowThankYou(true);
-      } catch (error) {
-        toast.error(error.message || "Failed to convert images to PDF");
-      } finally {
-        setIsConverting(false);
-        setSelectedFiles([]);
-      }
-      return;
-    }
-
-    setIsCompressing(true);
-    setUploadProgress(0);
-
-    const hasPngFile = files.some((file) => file.type === "image/png");
-    setIsPngFile(hasPngFile);
-
-    try {
-      const compressedData = await compressFile(
-        files,
-        compressionType,
-        setUploadProgress
-      );
-
-      let downloadName;
-      if (compressionType === "image" && files.length > 1) {
-        downloadName = "compressed_images.zip";
-      } else if (compressionType === "pdf" && files.length > 1) {
-        downloadName = "compressed_pdfs.zip";
-      } else if (files.length > 0) {
-        const originalName = files[0].name;
-        downloadName = `compressed_${originalName}`;
-      } else {
-        return;
-      }
-
-      downloadFile(compressedData, downloadName);
-      toast.success(
-        files.length > 1
-          ? "Files compressed successfully!"
-          : "File compressed successfully!"
-      );
-      setShowThankYou(true);
-    } catch (error) {
-      const errorMessage =
-        error.message || "Error compressing file(s). Please try again.";
-      toast.error(
-        <div>
-          <p>{errorMessage}</p>
-          {files.length > 1 && (
-            <p className="mt-1 text-sm">
-              If the error persists, try compressing files one by one.
-            </p>
-          )}
-        </div>
-      );
-      console.error("Compression error:", error);
-    } finally {
-      setIsCompressing(false);
-      setUploadProgress(0);
-      setSelectedFiles([]);
-    }
-  };
-
-  const handleReset = () => {
-    setShowThankYou(false);
-    setSelectedFiles([]);
-    setCompressionType("image");
-  };
-
   return (
-    <div
-      className={`max-w-3xl mx-auto ${
-        isCompressing || isConverting ? "mt-10" : "mt-20 sm:mt-4 md:mt-6"
-      } px-3 sm:px-4 md:px-6 py-4 sm:py-4 mb-8 sm:mb-12 md:mb-16`}
-    >
-      <style>{animationStyles}</style>
-      <div
-        className={`transition-all duration-500 ${
-          showThankYou ? "opacity-0 h-0 overflow-hidden" : "opacity-100"
-        }`}
-      >
-        <div className="text-center">
-          {!isCompressing && !isConverting ? (
-            <>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
-                Your All-in-one File
-              </h1>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-3 sm:mb-3 tracking-tight">
-                Processing Tool
-              </h1>
-              <div className="h-10 sm:h-12 relative overflow-visible">
-                <div
-                  key={currentTextIndex}
-                  className={`text-sm sm:text-base md:text-lg absolute w-full ${
-                    isAnimating
-                      ? "animate-slide-up-fade-out"
-                      : "animate-slide-up-fade-in"
-                  }`}
-                >
-                  {rotatingTexts[currentTextIndex]}
-                </div>
+    <div className="max-w-full min-h-screen flex flex-col items-center justify-center font-satoshi px-3 sm:px-6 md:px-8">
+      <style>
+        {`
+          ${animationStyles}
+          @keyframes slideUpFadeIn {
+            from {
+              opacity: 0;
+              transform: translateY(20px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          @keyframes slideUpFadeOut {
+            from {
+              opacity: 1;
+              transform: translateY(0);
+            }
+            to {
+              opacity: 0;
+              transform: translateY(-20px);
+            }
+          }
+          .animate-slide-up-fade-in {
+            animation: slideUpFadeIn 0.3s ease-out forwards;
+          }
+          .animate-slide-up-fade-out {
+            animation: slideUpFadeOut 0.3s ease-out forwards;
+          }
+        `}
+      </style>
+      <div className="w-full max-w-4xl text-center sm:text-left">
+        <div
+          className={`transition-all duration-500 ${
+            showFileUpload ? "opacity-0 h-0 overflow-hidden" : "opacity-100"
+          }`}
+        >
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-customBlack font-medium tracking-tight whitespace-pre-line">
+            Your All-in-one File
+          </h1>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-customBlack font-medium mb-2 sm:mb-4 tracking-tight whitespace-pre-line">
+            Processing Tool
+          </h1>
+          <div className="h-8 sm:h-8 relative overflow-visible">
+            <div
+              key={currentTextIndex}
+              className={`text-sm sm:text-base md:text-lg text-customGray absolute w-full text-center sm:text-left sm:w-auto ${
+                isAnimating
+                  ? "animate-slide-up-fade-out"
+                  : "animate-slide-up-fade-in"
+              }`}
+            >
+              {rotatingTexts[currentTextIndex]}
+            </div>
+          </div>
+          <div className="flex flex-row space-x-3 sm:space-x-4 justify-center sm:justify-start mt-4 sm:mt-6">
+            <button
+              onClick={() => setShowFileUpload(true)}
+              className="text-white flex items-center justify-center sm:justify-start group hover:brightness-95"
+            >
+              <span className="py-2 sm:py-2.5 md:py-2 px-3 sm:px-6 bg-[#1F1F1F] rounded-lg sm:rounded-xl text-xs sm:text-base group-hover:bg-[#2a2a2a] group-hover:sm:px-8 transition-all duration-300">
+                Get Started
+              </span>
+            </button>
+            <Link
+              to="/about"
+              className="text-customBlack flex items-center justify-center sm:justify-start group hover:brightness-95"
+            >
+              <span className="py-2 sm:py-2.5 md:py-2 px-3 sm:px-6 bg-white border border-customGray rounded-lg sm:rounded-xl text-xs sm:text-base">
+                How It Works
+              </span>
+              <div className="flex items-center justify-center w-8 h-8 sm:w-11 sm:h-11 md:w-10 md:h-10 bg-white border border-customGray rounded-full -ml-2 sm:-ml-4 group-hover:-ml-1 transition-all">
+                <FiArrowRight className="h-4 w-4 sm:h-6 sm:w-6 regular-icon group-hover:regular-icon rotate-[-45deg] transition-transform group-hover:rotate-0" />
               </div>
-            </>
-          ) : (
-            <>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-                Please Wait
-              </h1>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-3 sm:mb-4 tracking-tight whitespace-nowrap">
-                We're working on your files
-              </h1>
-              <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 mx-auto mb-4 sm:mb-6 md:mb-8">
-                <DotLottieReact
-                  src="https://lottie.host/7ffaf54c-fc48-4cd9-9459-b18d765a5e18/X232jk2jah.lottie"
-                  loop
-                  autoplay
-                  style={{ width: "100%", height: "100%" }}
-                />
-              </div>
-              <p className="text-sm sm:text-base md:text-lg mb-4 sm:mb-6 md:mb-8 px-2 sm:px-4">
-                {isPngFile
-                  ? "PNG processing can sometimes take a while, please wait a moment..."
-                  : "This may take a moment..."}
-              </p>
-            </>
-          )}
+            </Link>
+          </div>
         </div>
 
-        {!isCompressing && !isConverting && (
-          <FileUpload
-            onDrop={(acceptedFiles) => setSelectedFiles(acceptedFiles)}
-            compressionType={compressionType}
-            setCompressionType={setCompressionType}
-            isCompressing={isCompressing}
-            uploadProgress={uploadProgress}
-            selectedFiles={selectedFiles}
-            setSelectedFiles={setSelectedFiles}
-            onStartProcess={handleStartProcess}
-          />
+        {showFileUpload && (
+          <div className="animate-slide-up-fade-in">
+            <FileUpload />
+          </div>
         )}
-
-        {(isCompressing || isConverting) && selectedFiles.length > 0 && (
-          <FileProgress files={selectedFiles} uploadProgress={uploadProgress} />
-        )}
-      </div>
-
-      <div
-        className={`transition-all duration-500 ${
-          showThankYou ? "opacity-100" : "opacity-0 h-0 overflow-hidden"
-        }`}
-      >
-        <ThankYou onReset={handleReset} />
       </div>
     </div>
   );

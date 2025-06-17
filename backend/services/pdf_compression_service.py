@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 class PdfCompressionService:
     @staticmethod
-    def compress_pdf(file):
+    def compress_pdf(file, settings=None):
         """Compress PDF file using PyMuPDF with aggressive compression settings"""
         temp_path = None
         try:
@@ -24,6 +24,16 @@ class PdfCompressionService:
             # Get original file size
             original_size = os.path.getsize(temp_path) / (1024 * 1024)  # Convert to MB
             logger.info(f"Original PDF size: {original_size:.2f} MB")
+
+            # Get quality settings
+            quality = 30  # Default quality
+            dpi = 300    # Default DPI
+            if settings:
+                if 'quality' in settings:
+                    quality = int(settings['quality'])
+                if 'dpi' in settings:
+                    dpi = int(settings['dpi'])
+            logger.info(f"Using quality: {quality}, DPI: {dpi}")
 
             # Open the PDF
             doc = fitz.open(temp_path)
@@ -54,9 +64,9 @@ class PdfCompressionService:
                         # Convert to PIL Image for processing
                         image = Image.open(io.BytesIO(image_bytes))
                         
-                        # Compress image
+                        # Compress image with custom quality
                         img_byte_arr = io.BytesIO()
-                        image.save(img_byte_arr, format='JPEG', quality=30, optimize=True)
+                        image.save(img_byte_arr, format='JPEG', quality=quality, optimize=True)
                         img_byte_arr = img_byte_arr.getvalue()
                         
                         # Replace the image in the PDF
@@ -74,7 +84,7 @@ class PdfCompressionService:
                 logger.info(f"Compressed page {page_num + 1} content")
 
             logger.info("Starting final PDF compression")
-            # Set compression parameters (only supported ones)
+            # Set compression parameters
             new_doc.save(
                 output,
                 garbage=4,  # Maximum garbage collection
