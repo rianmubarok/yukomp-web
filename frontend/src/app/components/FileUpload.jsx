@@ -74,6 +74,17 @@ const FileUpload = () => {
       return;
     }
 
+    // Validasi ukuran file (25MB)
+    const MAX_FILE_SIZE = 25 * 1024 * 1024; // 25MB dalam bytes
+    const oversizedFiles = acceptedFiles.filter(file => file.size > MAX_FILE_SIZE);
+    
+    if (oversizedFiles.length > 0) {
+      toast.error(
+        `File berikut terlalu besar (maksimal 25MB): ${oversizedFiles.map(f => f.name).join(', ')}`
+      );
+      return;
+    }
+
     setSelectedFiles(acceptedFiles);
     if (acceptedFiles.length > 0) {
       const fileType = getFileType(acceptedFiles[0].name);

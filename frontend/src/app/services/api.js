@@ -42,8 +42,16 @@ export const compressFile = async (
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.message || "Failed to compress files");
+      // Coba parse error sebagai JSON
+      let errorMessage;
+      try {
+        const errorData = await response.json();
+        errorMessage = errorData.message || "Failed to compress files";
+      } catch (e) {
+        // Jika bukan JSON, gunakan status text
+        errorMessage = `Server error: ${response.status} ${response.statusText}`;
+      }
+      throw new Error(errorMessage);
     }
 
     const blob = await response.blob();
