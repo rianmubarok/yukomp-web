@@ -23,38 +23,29 @@ export const compressFile = async (
   customSettings = {}
 ) => {
   const formData = new FormData();
-
-  // Add files
-  files.forEach((file) => {
-    formData.append("files", file);
-  });
-
-  // Add custom settings if provided
+  files.forEach((file) => formData.append("files", file));
   if (Object.keys(customSettings).length > 0) {
-    console.log("Sending custom settings:", customSettings); // Debug log
     formData.append("settings", JSON.stringify(customSettings));
   }
 
   try {
-    const response = await fetch(`${API_BASE_URL}/compress/${feature}`, {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!response.ok) {
-      // Coba parse error sebagai JSON
-      let errorMessage;
-      try {
-        const errorData = await response.json();
-        errorMessage = errorData.message || "Failed to compress files";
-      } catch (e) {
-        // Jika bukan JSON, gunakan status text
-        errorMessage = `Server error: ${response.status} ${response.statusText}`;
+    const response = await axios.post(
+      `${API_BASE_URL}/compress/${feature}`,
+      formData,
+      {
+        responseType: "blob",
+        onUploadProgress: (progressEvent) => {
+          if (onProgress && progressEvent.total) {
+            const percent = Math.round(
+              (progressEvent.loaded * 100) / progressEvent.total
+            );
+            onProgress(percent);
+          }
+        },
       }
-      throw new Error(errorMessage);
-    }
+    );
 
-    const blob = await response.blob();
+    const blob = response.data;
     if (blob.size === 0) {
       throw new Error("Received empty response from server");
     }
@@ -64,12 +55,12 @@ export const compressFile = async (
       return { blob, compressedSizes: { [files[0].name + "0"]: blob.size } };
     }
 
-    // For multiple files, try to get individual sizes from response
+    // For multiple files, try to get individual sizes from response headers
     const compressedSizes = {};
     let hasIndividualSizes = false;
 
     files.forEach((file, index) => {
-      const sizeHeader = response.headers.get(`X-Compressed-Size-${index}`);
+      const sizeHeader = response.headers[`x-compressed-size-${index}`];
       if (sizeHeader) {
         compressedSizes[file.name + index] = parseInt(sizeHeader);
         hasIndividualSizes = true;
@@ -80,7 +71,6 @@ export const compressFile = async (
     if (!hasIndividualSizes) {
       const totalOriginalSize = files.reduce((sum, file) => sum + file.size, 0);
       const compressionRatio = blob.size / totalOriginalSize;
-
       files.forEach((file, index) => {
         compressedSizes[file.name + index] = Math.floor(
           file.size * compressionRatio

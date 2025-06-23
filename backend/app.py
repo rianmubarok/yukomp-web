@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from routes.compression_routes import compression_bp
 from routes.conversion_routes import conversion_bp
@@ -24,6 +24,14 @@ def create_app():
     # Register blueprints
     app.register_blueprint(compression_bp)
     app.register_blueprint(conversion_bp, url_prefix='/api/convert')
+    
+    # Health check endpoint
+    @app.route('/api/health', methods=['GET', 'OPTIONS'])
+    def health_check():
+        return jsonify({
+            'status': 'healthy',
+            'message': 'Service is running'
+        })
     
     # Root route
     @app.route('/')
