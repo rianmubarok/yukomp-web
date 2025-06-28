@@ -17,12 +17,6 @@ The name "Yukomp" comes from the Indonesian phrase "Yuk Kompres!", which means "
   - Keep your documents looking professional
   - Perfect for sharing and storing
 
-## 📸 Screenshot
-
-![Yukomp UI Screenshot](./screenshots/yukomp-ui.png)
-
-_Yukomp's clean and intuitive interface makes file compression a breeze!_
-
 ### 🎬 Demo
 
 ![Yukomp Demo](./screenshots/yukomp-demo.gif)
