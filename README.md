@@ -117,19 +117,3 @@ All rights reserved.
 
 You're free to use, explore, learn from, and modify this code for personal and non-commercial purposes — no need to ask!
 Feel free to build cool things on top of it, as long as you give credit and keep this notice in your version.
-
-Here's what you can do:
-
-- ✅ Use it personally
-- ✅ Modify and share your own version
-- ✅ Learn and build from it
-
-But please don't:
-
-- ❌ Use for commercial purposes without permission
-- ❌ Remove credit or license
-- ❌ Claim it as your own
-
-This project is provided "as-is" — no warranties or guarantees.
-
-Need commercial use? Just reach out: rupacode0@gmail.com
